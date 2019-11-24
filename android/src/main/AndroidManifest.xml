@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mmmgbhutta.reactnative.wallpapermanager"
+>
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <application>
+        <meta-data
+            android:name="com.mmmgbhutta.reactnative.wallpapermanager.RNGlideModule"
+            android:value="GlideModule" 
+        />
+    </application>
+</manifest>
