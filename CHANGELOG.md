@@ -1,3 +1,9 @@
+#### 1.1.1-4 (2019-12-04)
+
+##### Documentation Changes
+
+*  glide detail added ([7d0b3bdf](https://github.com/meharbhutta/react-native-manage-wallpaper/commit/7d0b3bdfcbfaa490802fc58c23ba2e0cbf1bcee3))
+
 ### 1.1.0-3 (2019-12-04)
 
 ##### Documentation Changes
