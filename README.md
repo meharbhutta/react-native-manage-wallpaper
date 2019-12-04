@@ -6,7 +6,7 @@ Android wallpaper manager for changing wallpaper.
 
 ## NPM
 
-- stable release version: ![version](https://img.shields.io/badge/version-1.1.0-blue.svg?cacheSeconds=2592000)
+- stable release version: ![version](https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000)
 - package downloads: ![downloads](https://img.shields.io/badge/downloads-22%2Fweek-brightgreen.svg?cacheSeconds=2592000)
 - [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
@@ -14,9 +14,17 @@ Android wallpaper manager for changing wallpaper.
 
 ### Installation
 
+- Using yarn
+
+`$ yarn add react-native-manage-wallpaper`
+
+- Using npm
+
 `$ npm install react-native-manage-wallpaper --save`
 
 ### Basic Usage
+
+#### Note: You must be using React Native 0.60.0 or higher
 
 - Initialization of a react-native project
 
@@ -86,6 +94,19 @@ export default class App extends Component<{}> {
 }
 ```
 
+### Are you using Glide already using an AppGlideModule?
+
+Removing RNGlideModule from `react-native-manage-wallpaper`  
+If you are using Glide within your application using an AppGlideModule then you will need to prevent the inclusion of the AppGlideModule in this package.
+
+To accomplish this you can add to `android/build.gradle`:
+
+```
+project.ext {
+  excludeRNGlideModule = true
+}
+```
+
 ### Arguments Type
 
 Type of arguments for `setWallpaper(source, callback, type)`
@@ -123,7 +144,7 @@ import { TYPE } from 'react-native-manage-wallpaper';
 Then,  
 For Home use TYPE.HOME  
 For Lock use TYPE.LOCK  
-For Home & LOCK use TYPE.BOTH
+For Home & Lock use TYPE.BOTH
 
 ##### Note: No support for setting wallpaper on Lock Screen for android version < 24 (Nougat).
 
@@ -131,8 +152,25 @@ For Home & LOCK use TYPE.BOTH
 
 ```bash
 cd example
-yarn
+yarn or npm install
 npx react-native run-android
 ```
 
 #### In case of any issue follow the [GUIDE](https://facebook.github.io/react-native/docs/getting-started).
+
+### Supported React Native Versions  
+
+This project only aims to support the latest version of React Native.  
+This simplifies the development and the testing of the project.
+
+If you require new features or bug fixes for older versions you can fork this project.
+
+### Credits
+
+The idea for this modules came from liuhong1happy react-native-wallpaper-manager package. It also uses Glide, but didn't have some features I needed (home, lock, both).
+
+
+### Licenses
+
+ManageWallPaper - MIT © MeharBhutta  
+Glide - BSD, part MIT and Apache 2.0. See the LICENSE file for details.
