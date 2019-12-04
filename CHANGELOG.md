@@ -1,3 +1,13 @@
+### 1.1.0-3 (2019-12-04)
+
+##### Documentation Changes
+
+*  stable release updated ([c95d1d2f](https://github.com/meharbhutta/react-native-manage-wallpaper/commit/c95d1d2f22a1379b699e861ee09eb6d2bd536e6a))
+
+##### New Features
+
+*  upgraded glide version ([2c529350](https://github.com/meharbhutta/react-native-manage-wallpaper/commit/2c5293506c7f5b9740c46984af9cace93b83e08c))
+
 #### 1.0.1-2 (2019-12-04)
 
 ##### Bug Fixes
