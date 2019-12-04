@@ -9,7 +9,7 @@ const argv = require('minimist')(process.argv.slice(1));
 // eslint-disable-next-line handle-callback-err
 git().tags((err, tags) => {
   const currentChangelog = fs.readFileSync('./CHANGELOG.md');
-  const matched = tags.latest.match(/v\d+.\d+.\d+-(\d+)/);
+  const matched = tags && tags.latest ? tags.latest.match(/v\d+.\d+.\d+-(\d+)/) : 'v1.0.0';
   const build = (idx(matched, _ => Number(_[1])) || 0) + 1;
 
   generate_changelog
