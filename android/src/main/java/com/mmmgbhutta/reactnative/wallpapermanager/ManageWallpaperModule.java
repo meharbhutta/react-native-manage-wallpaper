@@ -6,21 +6,19 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.util.Base64;
-import android.widget.ImageView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.graphics.PixelFormat;
+
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -34,8 +32,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.views.imagehelper.ResourceDrawableIdHelper;
 import com.facebook.react.views.imagehelper.ImageSource;
 
-import java.util.Map;
-
 public class ManageWallpaperModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
@@ -44,7 +40,6 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
     private ReadableMap rctParams;
     private ResourceDrawableIdHelper mResourceDrawableIdHelper;
     private Uri mUri;
-    private ImageView imgView;
     private ReactApplicationContext mApplicationContext;
     private Activity mCurrentActivity;
 
@@ -54,7 +49,6 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
         mApplicationContext = getReactApplicationContext();
 
         wallpaperManager = WallpaperManager.getInstance(mApplicationContext);
-        imgView = new ImageView(mApplicationContext);
     }
 
     @Override
@@ -92,7 +86,7 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
         rctCallback = callback;
         rctParams = params;
 
-        final SimpleTarget<byte[]> simpleTarget = this.getSimpleTarget(source, type);
+        final CustomTarget<Bitmap> customTarget = this.getCustomTarget(source, type);
         mCurrentActivity = getCurrentActivity();
 
         if (mCurrentActivity == null) {
@@ -107,11 +101,10 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
                     try {
                         Glide
                             .with(mApplicationContext)
-                            .load(Base64.decode(source.replaceAll("data:image\\/.*;base64,", ""), Base64.DEFAULT))
                             .asBitmap()
-                            .toBytes()
-                            .centerCrop()
-                            .into(simpleTarget);
+                            .apply(requestOptions())
+                            .load(Base64.decode(source.replaceAll("data:image\\/.*;base64,", ""), Base64.DEFAULT))
+                            .into(customTarget);
                     } catch (Exception e) {
                         sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
                     }
@@ -172,11 +165,10 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
                     try{
                         Glide
                             .with(mApplicationContext)
-                            .load(mUri)
                             .asBitmap()
-                            .toBytes()
-                            .centerCrop()
-                            .into(simpleTarget);
+                            .apply(requestOptions())
+                            .load(mUri)
+                            .into(customTarget);
                     } catch (Exception e) {
                         sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
                     }
@@ -189,11 +181,10 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
                     try {
                         Glide
                             .with(mApplicationContext)
-                            .load(mUri)
                             .asBitmap()
-                            .toBytes()
-                            .centerCrop()
-                            .into(simpleTarget);
+                            .apply(requestOptions())
+                            .load(mUri)
+                            .into(customTarget);
                     } catch (Exception e) {
                         sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
                     }
@@ -218,11 +209,10 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
                     try {
                         Glide
                             .with(mApplicationContext)
-                            .load(new GlideUrl(mUri.toString(), lazyHeaders.build()))
                             .asBitmap()
-                            .toBytes()
-                            .centerCrop()
-                            .into(simpleTarget);
+                            .apply(requestOptions())
+                            .load(new GlideUrl(mUri.toString(), lazyHeaders.build()))
+                            .into(customTarget);
                     } catch (Exception e) {
                         sendMessage("error", "Exception in Glide：" + e.getMessage(), source);
                     }
@@ -231,11 +221,16 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private SimpleTarget<byte[]> getSimpleTarget(final String source, final String type) {
-        return new SimpleTarget<byte[]>(1080, 1920) {
+    private RequestOptions requestOptions() {
+        return new RequestOptions()
+                .format(DecodeFormat.PREFER_ARGB_8888)
+                .centerCrop();
+    }
+
+    private CustomTarget<Bitmap> getCustomTarget(final String source, final String type) {
+        return new CustomTarget<Bitmap>(1080, 1920) {
             @Override
-            public void onResourceReady(byte[] resource, GlideAnimation<? super byte[]> glideAnimation) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(resource, 0, resource.length);
+            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                 try {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         if (type.equals("home")) {
@@ -256,9 +251,14 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+
+            @Override
+            public void onLoadFailed(Drawable errorDrawable) {
                 // Do nothing.
-                sendMessage("error", "Set Wallpaper Failed：" + e.getMessage(), source);
+                sendMessage("error", "Set Wallpaper Failed：" + errorDrawable.toString(), source);
             }
         };
     }

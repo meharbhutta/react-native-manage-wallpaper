@@ -14,6 +14,9 @@ def DEFAULT_COMPILE_SDK_VERSION = 28
 def DEFAULT_BUILD_TOOLS_VERSION = '28.0.3'
 def DEFAULT_MIN_SDK_VERSION = 16
 def DEFAULT_TARGET_SDK_VERSION = 28
+def DEFAULT_REACT_NATIVE_VERSION = '+'
+def DEFAULT_GLIDE_VERSION = '4.9.0'
+def DEFAULT_EXCLUDE_RN_GLIDE = false
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -44,6 +47,16 @@ apply plugin: 'maven'
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    sourceSets {
+        main {
+            java {
+                if (safeExtGet('excludeRNGlideModule', DEFAULT_EXCLUDE_RN_GLIDE)) {
+                    srcDir "src"
+                    exclude "**/RNGlideModule.java"
+                }
+            }
+        }
+    }
     defaultConfig {
         minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
         targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
@@ -72,8 +85,11 @@ repositories {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation "com.facebook.react:react-native:${safeExtGet('reactNative', DEFAULT_REACT_NATIVE_VERSION)}"  // From node_modules
+    implementation "com.github.bumptech.glide:glide:${safeExtGet('glideVersion', DEFAULT_GLIDE_VERSION)}"
+    implementation "com.github.bumptech.glide:annotations:${safeExtGet('glideVersion', DEFAULT_GLIDE_VERSION)}"
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    annotationProcessor "com.github.bumptech.glide:glide:${safeExtGet('glideVersion', DEFAULT_GLIDE_VERSION)}"
 }
 
 def configureReactNativePom(def pom) {
