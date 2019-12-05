@@ -1,3 +1,9 @@
+#### 1.1.2-5 (2019-12-05)
+
+##### Documentation Changes
+
+* **usage:**   source argument  updated ([ca2712ee](https://github.com/meharbhutta/react-native-manage-wallpaper/commit/ca2712eeb3114a41726290833a0a07f19df20cb1))
+
 #### 1.1.1-4 (2019-12-04)
 
 ##### Documentation Changes
