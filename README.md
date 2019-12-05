@@ -6,7 +6,7 @@ Android wallpaper manager for changing wallpaper.
 
 ## NPM
 
-- stable release version: ![version](https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000)
+- stable release version: ![version](https://img.shields.io/badge/version-1.1.2-blue.svg?cacheSeconds=2592000)
 - package downloads: ![downloads](https://img.shields.io/badge/downloads-22%2Fweek-brightgreen.svg?cacheSeconds=2592000)
 - [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
@@ -46,9 +46,7 @@ export default class App extends Component<{}> {
   _setWallpaper = () => {
    ManageWallpaper.setWallpaper(
       {
-        uri: {
-          uri: 'https://i.pinimg.com/originals/76/5e/1d/765e1dc8cb1cc115fb3b0b39a895fdeb.jpg',
-        },
+        uri: 'https://i.pinimg.com/originals/76/5e/1d/765e1dc8cb1cc115fb3b0b39a895fdeb.jpg',
       },
       this._callback,
       TYPE.HOME,
