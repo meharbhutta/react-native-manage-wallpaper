@@ -258,7 +258,11 @@ public class ManageWallpaperModule extends ReactContextBaseJavaModule {
             @Override
             public void onLoadFailed(Drawable errorDrawable) {
                 // Do nothing.
-                sendMessage("error", "Set Wallpaper Failed：" + errorDrawable.toString(), source);
+                String errorMessage = "Set Wallpaper Failed：Image not loaded";
+                if(errorDrawable != null) {
+                    errorMessage = "Set Wallpaper Failed：" + errorDrawable.toString();
+                }
+                sendMessage("error", errorMessage, source);
             }
         };
     }
