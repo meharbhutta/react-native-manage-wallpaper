@@ -13,9 +13,9 @@
     "baseUrl": "https://github.com/meharbhutta/react-native-manage-wallpaper"
   },
   "author": {
-    "name": "Muhammad Mehar",
-    "email": "meharbhutta@gmail.com",
-    "url": "https://twitter.com/meharbhutta"
+    "name": "Tierry Barros",
+    "email": "tierrybarros15@gmail.com",
+    "url": "https://www.linkedin.com/in/tierrybrs/"
   },
   "devDependencies": {
     "@commitlint/cli": "8.1.0",
