@@ -9,8 +9,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meharbhutta/react-native-manage-wallpaper.git",
-    "baseUrl": "https://github.com/meharbhutta/react-native-manage-wallpaper"
+    "url": "git+https://github.com/tierrybr/react-native-manage-wallpaper.git",
+    "baseUrl": "https://github.com/tierrybr/react-native-manage-wallpaper"
   },
   "author": {
     "name": "Tierry Barros",
