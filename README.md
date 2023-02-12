@@ -2,8 +2,6 @@
 
 Android wallpaper manager for changing wallpaper.
 
-<a href="https://twitter.com/intent/follow?screen_name=meharbhutta"><img src="https://img.shields.io/twitter/follow/meharbhutta.svg?style=social&logo=twitter" alt="follow on Twitter" /></a>
-
 ## NPM
 
 - stable release version: ![version](https://img.shields.io/badge/version-1.1.2-blue.svg?cacheSeconds=2592000)
@@ -16,11 +14,11 @@ Android wallpaper manager for changing wallpaper.
 
 - Using yarn
 
-`$ yarn add react-native-manage-wallpaper`
+`$ yarn add @tierrybr/react-native-manage-wallpaper`
 
 - Using npm
 
-`$ npm install react-native-manage-wallpaper --save`
+`$ npm install @tierrybr/react-native-manage-wallpaper --save`
 
 ### Basic Usage
 
@@ -35,60 +33,26 @@ Android wallpaper manager for changing wallpaper.
 - Then, edit `AwesomeProject/App.js`, like this:
 
 ```javascript
-import { View, TouchableOpacity, Text } from 'react-native';
-import ManageWallpaper, { TYPE } from 'react-native-manage-wallpaper';
+import { TouchableOpacity, Text } from 'react-native';
+import ManageWallpaper, { TYPE } from '@tierrybr/react-native-manage-wallpaper';
 
-export default class App extends Component<{}> {
-  _callback = res => {
-    console.log('Response: ', res);
-  };
+export default function App() {
 
-  _setWallpaper = () => {
+  setWallpaper = () => {
    ManageWallpaper.setWallpaper(
       {
         uri: 'https://i.pinimg.com/originals/76/5e/1d/765e1dc8cb1cc115fb3b0b39a895fdeb.jpg',
       },
-      this._callback,
+      res => console.log(res),
       TYPE.HOME,
     );
   };
 
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#F5FCFF',
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            paddingHorizontal: 30,
-            paddingVertical: 8,
-            marginBottom: 24,
-            borderRadius: 16,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#000000',
-          }}
-          onPress={this._setWallpaper}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              margin: 10,
-              textAlign: 'center',
-              color: '#FFFFFF',
-            }}
-          >
-            Change Home Wallpaper
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <TouchableOpacity onPress={setWallpaper}>
+      <Text>Set wallpaper<Text/>
+    <TouchableOpacity/>
+  )
 }
 ```
 
@@ -136,7 +100,7 @@ e.g.
 Firstly,
 
 ```javascript
-import { TYPE } from 'react-native-manage-wallpaper';
+import { TYPE } from '@tierrybr/react-native-manage-wallpaper';
 ```
 
 Then,  
@@ -166,6 +130,7 @@ If you require new features or bug fixes for older versions you can fork this pr
 ### Credits
 
 The idea for this modules came from liuhong1happy react-native-wallpaper-manager package. It also uses Glide, but didn't have some features I needed (home, lock, both).
+Fork based on lib https://github.com/meharbhutta/react-native-manage-wallpaper, however it is outdated.
 
 
 ### Licenses
